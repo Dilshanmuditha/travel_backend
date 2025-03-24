@@ -11,18 +11,26 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer vehicle_id;
-    private Integer customer_id;
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
+    }
+
+    private Integer vehicleId;
+    private Integer customerId;
     private Date start_date;
     private Date end_date;
     private String pick_location;
-    private Double total_amount;
+    private double total_amount;
 
-    public Double getTotal_amount() {
+    public double getTotal_amount() {
         return total_amount;
     }
 
-    public void setTotal_amount(Double total_amount) {
+    public void setTotal_amount(double total_amount) {
         this.total_amount = total_amount;
     }
 
@@ -44,20 +52,12 @@ public class Order {
         this.id = id;
     }
 
-    public Integer getVehicle_id() {
-        return vehicle_id;
+    public Integer getVehicleId() {
+        return vehicleId;
     }
 
-    public void setVehicle_id(Integer vehicle_id) {
-        this.vehicle_id = vehicle_id;
-    }
-
-    public Integer getCustomer_id() {
-        return customer_id;
-    }
-
-    public void setCustomer_id(Integer customer_id) {
-        this.customer_id = customer_id;
+    public void setVehicleId(Integer vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     public Date getStart_date() {

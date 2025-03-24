@@ -15,6 +15,15 @@ public class VehicleDto {
     private String password;
     private String description;
     private Integer price_perday;
+    private Integer driverId;
+
+    public Integer getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(Integer driverId) {
+        this.driverId = driverId;
+    }
 
     public Integer getPrice_perday() {
         return price_perday;

@@ -18,6 +18,15 @@ public class Vehicle {
     private String driver_mobile;
     private String password;
     private Integer price_perday;
+    private Integer driverId;
+
+    public Integer getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(Integer driverId) {
+        this.driverId = driverId;
+    }
 
     public Integer getPrice_perday() {
         return price_perday;

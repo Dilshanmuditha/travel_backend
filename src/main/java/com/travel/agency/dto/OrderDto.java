@@ -8,9 +8,9 @@ import java.util.Date;
 
 public class OrderDto {
     @NotNull(message = "The vehicle is required!")
-    private Integer vehicle_id;
+    private Integer vehicleId;
     @NotNull(message = "The customer is required!")
-    private Integer customer_id;
+    private Integer customerId;
     @NotNull(message = "Start date is required")
     @FutureOrPresent(message = "Start date must be today or in the future")
     private Date start_date;
@@ -21,20 +21,20 @@ public class OrderDto {
     private String pick_location;
     private Date created_at;
 
-    public Integer getVehicle_id() {
-        return vehicle_id;
+    public Integer getVehicleId() {
+        return vehicleId;
     }
 
-    public void setVehicle_id(Integer vehicle_id) {
-        this.vehicle_id = vehicle_id;
+    public void setVehicleId(Integer vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
-    public Integer getCustomer_id() {
-        return customer_id;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer_id(Integer customer_id) {
-        this.customer_id = customer_id;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
     public Date getStart_date() {

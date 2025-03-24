@@ -1,7 +1,10 @@
 package com.travel.agency.controller;
 
+import com.travel.agency.dto.UserDto;
 import com.travel.agency.dto.VehicleDto;
+import com.travel.agency.models.User;
 import com.travel.agency.models.Vehicle;
+import com.travel.agency.service.UserRepository;
 import com.travel.agency.service.VehicleRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,8 @@ import java.util.Optional;
 public class VehicleController {
     @Autowired
     private VehicleRepository vehicleRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping({"","/"})
     public ResponseEntity<List<Vehicle>> showVehiclesList(Model model){
@@ -46,7 +51,7 @@ public class VehicleController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createVehicle(@Valid @ModelAttribute VehicleDto vehicleDto, BindingResult result) {
+    public ResponseEntity<?> createVehicle(@Valid @ModelAttribute VehicleDto vehicleDto, @Valid @ModelAttribute UserDto userDto, BindingResult result) {
         // Check for validation errors
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
@@ -75,6 +80,16 @@ public class VehicleController {
                 Files.copy(inputStream, Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
             }
 
+            // Create and save the driver
+            User user = new User();
+            user.setCreated_at(createdAt);
+            user.setEmail(userDto.getEmail());
+            user.setName(userDto.getName());
+            user.setMobile(userDto.getMobile());
+            user.setRole("driver");
+            user.setPassword(userDto.getPassword());
+            userRepository.save(user);
+
             // Create and save the vehicle
             Vehicle vehicle = new Vehicle();
             vehicle.setCreated_at(createdAt);
@@ -86,6 +101,8 @@ public class VehicleController {
             vehicle.setDriver_mobile(vehicleDto.getDriver_mobile());
             vehicle.setPassword(vehicleDto.getPassword());
             vehicle.setPrice_perday(vehicleDto.getPrice_perday());
+
+            vehicle.setDriverId(user.getId());
             vehicleRepository.save(vehicle);
 
             return ResponseEntity.ok(vehicle);

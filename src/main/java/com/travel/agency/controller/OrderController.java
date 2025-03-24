@@ -48,11 +48,11 @@ public class OrderController {
                 orderDetails.put("order", order);
 
                 // Fetch vehicle details
-                Optional<Vehicle> vehicle = vehicleRepository.findById(order.getVehicle_id());
+                Optional<Vehicle> vehicle = vehicleRepository.findById(order.getVehicleId());
                 vehicle.ifPresent(v -> orderDetails.put("vehicle", v));
 
                 // Fetch customer details
-                Optional<User> customer = userRepository.findById(order.getCustomer_id());
+                Optional<User> customer = userRepository.findById(order.getCustomerId());
                 customer.ifPresent(c -> orderDetails.put("customer", c));
 
                 return orderDetails;
@@ -75,6 +75,18 @@ public class OrderController {
         return ResponseEntity.ok(order);
     }
 
+    @GetMapping("/customer/{id}")
+    public ResponseEntity<?> getOrdersByCustomerId(@PathVariable int id) {
+        List<Order> orders = orderRepository.findByCustomerId(id);
+        return ResponseEntity.ok(orders);
+    }
+
+    @GetMapping("/driver/{id}")
+    public ResponseEntity<?> getOrdersByDriverId(@PathVariable int id) {
+        List<Order> orders = orderRepository.findByVehicleId(id);
+        return ResponseEntity.ok(orders);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> createOrder(@Valid @ModelAttribute OrderDto orderDto, BindingResult result) {
         // Check for validation errors
@@ -84,8 +96,8 @@ public class OrderController {
 
         Date createdAt = new Date();
         try {
-            Optional<Vehicle> optionalVehicle = vehicleRepository.findById(orderDto.getVehicle_id());
-            Optional<User> optionalUser = userRepository.findById(orderDto.getCustomer_id());
+            Optional<Vehicle> optionalVehicle = vehicleRepository.findById(orderDto.getCustomerId());
+            Optional<User> optionalUser = userRepository.findById(orderDto.getCustomerId());
             if (optionalVehicle.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Vehicle not found");
             }
@@ -106,8 +118,8 @@ public class OrderController {
             // Create and save the order
             Order order = new Order();
             order.setCreated_at(createdAt);
-            order.setCustomer_id(orderDto.getCustomer_id());
-            order.setVehicle_id(orderDto.getVehicle_id());
+            order.setCustomerId(orderDto.getCustomerId());
+            order.setVehicleId(orderDto.getVehicleId());
             order.setStart_date(orderDto.getStart_date());
             order.setEnd_date(orderDto.getEnd_date());
             order.setTotal_amount(totalAmount);
@@ -122,5 +134,7 @@ public class OrderController {
                     .body("An unexpected error occurred: " + ex.getMessage());
         }
     }
+
+
 
 }
