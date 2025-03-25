@@ -11,7 +11,7 @@ import java.util.Date;
 public class UserDto {
     @NotEmpty(message = "The name is required!")
     private String name;
-    @NotEmpty(message = "The role is required!")
+
     private String role;
     @NotEmpty(message = "The email is required!")
     private String email;
