@@ -27,7 +27,7 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> signin(@Valid @ModelAttribute UserDto userDto, BindingResult result) {
+    public ResponseEntity<?> signin(@Valid @RequestBody UserDto userDto, BindingResult result) {
         Optional<User> customerOpt = userRepository.findByEmail(userDto.getEmail());
 
         if (customerOpt.isEmpty()) {

@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createUser(@Valid @ModelAttribute UserDto userDto, BindingResult result) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDto, BindingResult result) {
         // Check for validation errors
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
@@ -67,7 +67,7 @@ public class UserController {
     }
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity<?> editUser(@PathVariable int id, @Valid @ModelAttribute UserDto userDto, BindingResult result) {
+    public ResponseEntity<?> editUser(@PathVariable int id, @Valid @RequestBody UserDto userDto, BindingResult result) {
         // Check for validation errors
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());

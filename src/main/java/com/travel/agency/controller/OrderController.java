@@ -88,7 +88,7 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createOrder(@Valid @ModelAttribute OrderDto orderDto, BindingResult result) {
+    public ResponseEntity<?> createOrder(@Valid @RequestBody OrderDto orderDto, BindingResult result) {
         // Check for validation errors
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(result.getAllErrors());
